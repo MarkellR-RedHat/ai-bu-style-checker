@@ -118,7 +118,7 @@ End with exactly one line summarizing the work:
 
 After the closing line, add exactly one line:
 
-> Run `/review-as sre` to get a technical accuracy review.
+> Run `/review-as-persona sre` to get a technical accuracy review from an SRE perspective.
 
 ## Calibration
 

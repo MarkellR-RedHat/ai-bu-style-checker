@@ -153,3 +153,9 @@ Verify these things. Do not skip this step:
 4. You did not flag anything inside code blocks or inline code.
 5. The "most common issues" table reflects actual frequency.
 6. Every finding includes exact text and exact replacement.
+
+## Cross-tool suggestion
+
+After the dashboard output, add exactly one line:
+
+> Run `/style-fix` on the worst offenders to clear the Tier 1 issues automatically.

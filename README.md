@@ -193,6 +193,10 @@ allowlist of approved GPU nodes.
 5. **Before opening a PR**, run `/style-diff main` to catch issues in your changes only.
 6. **If the checker flags something intentional**, run `/style-learn` to record the exception.
 
+### The shortcut that saves the most time
+
+Run `/style-fix` first, then `/style-score`. Not the other way around. Most teams start with scoring, see a 45, get discouraged, and start manually editing. If you let `/style-fix` handle the mechanical corrections first (product names, wordy phrases, em dashes), you typically jump from the 40s to the 70s in under a minute. Then you only need to manually rewrite the 3-5 findings that require human judgment to clear 90.
+
 ## Reference files
 
 The `reference/` directory contains two guides that power the checker:
@@ -200,6 +204,17 @@ The `reference/` directory contains two guides that power the checker:
 - **`reference/product-names.md`**: 250+ product names with correct capitalization, acceptable abbreviations, and common mistakes. Covers Red Hat products, NVIDIA/Intel/AMD/AWS/Azure/GCP/IBM partner products, open source AI/ML tools, and the Kubernetes ecosystem.
 
 - **`reference/style-guide.md`**: Red Hat writing style rules covering voice, headings, lists, code blocks, link text, inclusive language, technical patterns, and AI/ML terminology.
+
+## Works well with
+
+Style checking is one step in the writing workflow. These other tools in the AI BU suite handle the rest:
+
+- **`/review-as-persona`** gets a technical accuracy review from a specific persona (SRE, PM, customer). Run it after style-fix to catch factual issues that style rules do not cover.
+- **`/message-polisher`** tightens Slack messages, emails, and short-form content where a full style check is overkill.
+- **`/cfp-generator`** builds conference proposals. Run `/style-check` on the abstract before submitting.
+- **`/slide-outliner`** structures talks. Run `/tone-check` on your speaker notes to make sure they sound like an engineer, not a press release.
+
+See the full suite at [github.com/MarkellR-RedHat](https://github.com/MarkellR-RedHat).
 
 ## Contributing
 
