@@ -10,12 +10,24 @@ A practical reference for writing content that follows Red Hat conventions. This
 - **Be accessible.** Write for a smart reader who may not be an expert in your specific area. Define terms on first use.
 - **Be honest.** Do not oversell or use marketing buzzwords.
 
+### Good vs. Bad: Voice
+
+**Bad:** "We're thrilled to announce that Red Hat's groundbreaking, best-in-class platform leverages cutting-edge AI to deliver a paradigm shift in enterprise computing."
+
+**Good:** "Red Hat OpenShift AI now supports large language model serving with llm-d. This gives platform engineers a Kubernetes-native way to run inference workloads at scale."
+
+**Bad:** "Simply install the operator and you'll be up and running in no time."
+
+**Good:** "Install the operator using the following steps. The process takes about 10 minutes depending on your cluster size."
+
 ### What to Avoid
 
-- "Best-in-class," "world-class," "cutting-edge," "next-generation"
-- "Leverage" (as a verb), "utilize," "synergy," "paradigm shift"
+- "Best-in-class," "world-class," "cutting-edge," "next-generation," "revolutionary," "game-changing"
+- "Leverage" (as a verb), "utilize," "synergy," "paradigm shift," "unlock value"
 - "We're excited to announce" or "We're thrilled" (just announce it)
 - "Simply," "just," "easy" (what is simple for you may not be simple for the reader)
+- "Designed to" without saying what it actually does (vague filler)
+- Stacking multiple adjectives before a noun ("our powerful, flexible, scalable, enterprise-grade solution")
 
 ## Product Names
 
@@ -36,6 +48,18 @@ Prefer active voice. Passive voice is acceptable when the actor is unknown or un
 
 - **Passive**: "The cluster is managed by the operator."
 - **Active**: "The operator manages the cluster."
+- **Passive**: "The model can be deployed by using the CLI."
+- **Active**: "Deploy the model using the CLI."
+
+### Good vs. Bad: Technical Writing
+
+**Bad:** "It should be noted that the configuration file must be updated prior to the deployment being initiated, due to the fact that the system utilizes the settings at startup time in order to facilitate proper initialization."
+
+**Good:** "Update the configuration file before you deploy. The system reads these settings at startup."
+
+**Bad:** "Red Hat's Openshift platform provides a comprehensive, best-in-class container orchestration solution that leverages the power of kubernetes to deliver next-generation application deployment capabilities."
+
+**Good:** "Red Hat OpenShift Container Platform manages containers on Kubernetes. It handles builds, deployments, scaling, and networking so your team can focus on writing code."
 
 ### Sentence Length
 
@@ -48,6 +72,18 @@ Break up walls of text. A paragraph should cover one idea. If you are writing mo
 ### Lists
 
 Use bulleted lists for items without a required order. Use numbered lists for sequential steps. Each list item should follow parallel construction.
+
+### Good vs. Bad: Structure
+
+**Bad (wall of text):** "OpenShift supports multiple deployment strategies including rolling updates and blue-green deployments and canary releases and you can configure each one using the deployment configuration object which allows you to specify the strategy type and parameters and hooks and you can also use the web console to monitor the progress of your deployments and roll back if something goes wrong."
+
+**Good (structured):** "OpenShift supports multiple deployment strategies:
+
+- **Rolling updates** replace pods gradually with zero downtime.
+- **Blue-green deployments** run two identical environments and switch traffic between them.
+- **Canary releases** route a small percentage of traffic to the new version before full rollout.
+
+Configure these strategies in the deployment configuration object. Use the web console to monitor progress and roll back if needed."
 
 ## Words and Phrases to Fix
 
