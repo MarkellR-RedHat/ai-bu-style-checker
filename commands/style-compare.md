@@ -22,6 +22,13 @@ Accepted formats:
 
 Before outputting, verify: (1) an issue is "fixed" only if the text changed or was deleted; (2) an issue is "introduced" only if the new version created it; (3) scores match the `/style-score` rubric; (4) no double-counting of moved text; (5) nothing flagged inside code blocks, inline code, URLs, or file paths.
 
+**Edge cases:**
+- **Code comments**: If both versions are code files, score only product names and inclusive language. Skip tone and phrasing. Report other categories as "N/A (code file)."
+- **YAML/JSON/TOML config files**: Score only string values (descriptions, labels, annotations). Skip keys, structure, and non-string values. Note in the header: "Compared N string values from config file."
+- **Intentional violations**: If either version contains blockquoted text labeled "Bad:" or otherwise marked as an intentional example of poor style, exclude it from scoring in both versions so the delta is fair.
+- **Empty file (either version)**: If "before" is empty, treat it as a new document and report "Before version is empty. Scoring the 'after' version only." If "after" is empty, report "After version is empty. The content was deleted."
+- **Unknown product name**: Do not penalize the score for product names not in `reference/product-names.md`. Note them separately: "Unknown product names (not scored): [list]."
+
 ## Output format
 
 ```
@@ -93,6 +100,10 @@ Score: XX -> YY ([+/-]ZZ points)
 | Both 90+ | "Both versions clear the style bar. [Improved: Nice polish. / Same: Solid as-is.]" |
 
 If issues remain: suggest `/style-fix [new version path]` to clean up automatically.
+
+**Cross-tool suggestion.** After the verdict, add exactly one line:
+
+> Run `/tone-check` on the new version to verify the voice matches Red Hat engineering style.
 
 ## Calibration
 

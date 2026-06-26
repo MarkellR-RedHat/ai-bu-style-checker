@@ -21,6 +21,23 @@ Not Red Hat: "We are committed to delivering the highest quality experience for 
 
 The pattern: Red Hat voice names the thing, explains the mechanism, shows the evidence. Corporate voice hides behind adjectives.
 
+## Scope detection
+
+Before analyzing, classify the input.
+
+**Content type classification:**
+- **Prose** (blog post, doc page, README): Run the full tone analysis.
+- **Code comments**: Analyze only for marketing language and vague claims in docstrings and block comments. Skip voice analysis and passive voice counts. Code comments follow different conventions.
+- **YAML/JSON/TOML config files**: Analyze only string values (descriptions, labels, annotations). Note in the header: "Analyzed N string values from config file."
+- **Commit message or PR description**: Run full analysis but relax the rating. Short-form content naturally reads differently than a blog post. Note the format in the header.
+- **Quoted material or flagged examples**: If text is inside a blockquote, labeled "Bad:", or otherwise marked as an intentional example of poor style, exclude it from analysis. The author is showing what not to do.
+
+**Edge cases:**
+- **Empty file**: Report "File is empty. Nothing to analyze."
+- **Binary file**: Report "Binary file detected. Tone analysis applies to text content only."
+- **All code blocks**: If the document is entirely code blocks with no prose, report "No prose content found. This file contains only code blocks."
+- **Unknown product name**: If a product or project name appears that is not in `reference/product-names.md`, do not factor it into the tone rating. Tone analysis measures voice, not product name accuracy.
+
 ## Analysis Steps
 
 **Step 1: Pre-scan.** Read the document. Mark code blocks, inline code, and CLI examples as excluded zones. Count total sentences outside them.
@@ -124,3 +141,7 @@ specificity you used in the architecture section. Replace every adjective
 ("cutting-edge," "seamless," "revolutionary") with a number or a named
 mechanism.
 ```
+
+**Cross-tool suggestion.** After the recommendation, add exactly one line:
+
+> Run `/style-check` to catch product name and formatting issues that tone analysis does not cover.

@@ -16,6 +16,13 @@ Figure out what term or rule they want you to stop flagging, why, and whether th
 project-scoped or a general correction. If something is ambiguous, ask one short
 clarifying question. A copy editor who assumes makes the wrong edit.
 
+**Edge cases:**
+- **Code-only term**: If the user says a term is only used in code (inline code, code blocks, CLI commands), record the exception with `scope: code-only` so it applies inside code contexts but still gets flagged in prose.
+- **YAML/JSON key name**: If the user says a YAML or JSON key should not be flagged, record it with `scope: config-keys`. Style checkers already skip config keys, but this covers edge cases where a key appears in prose documentation about the config.
+- **Intentional style violation**: If the user says they intentionally use a flagged pattern (like em dashes in a specific file), record it with `scope` set to the file path so it applies only there.
+- **Empty input**: If the user provides no argument at all, display the current exception list from `.style-exceptions.yml` (same as "list" or "show").
+- **Unknown product name registration**: If the user wants to register a product name that is not in `reference/product-names.md`, record the exception AND suggest they also open a PR to add it to the reference file so the whole team benefits.
+
 ## Step 2: Classify the exception
 
 | Type | When to use it | Example |
@@ -131,3 +138,7 @@ legal requirement. The capitalization is non-negotiable.
 If typing "OpenShift" is slowing you down, set up a text expander:
 "oshift" -> "OpenShift". Most editors support this natively.
 ```
+
+**Cross-tool suggestion.** After confirming the exception, add exactly one line:
+
+> Run `/style-check` on your file to verify the exception clears the false positive.

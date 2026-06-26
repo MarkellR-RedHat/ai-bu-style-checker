@@ -38,6 +38,13 @@ Load rules from `reference/style-guide.md` and product names from `reference/pro
 
 Skip content inside code blocks, inline code, URLs, and file paths.
 
+**Edge cases:**
+- **Code comments in diff**: If the changed lines are inside code files, check only product names and inclusive language. Skip tone and phrasing checks on code comments.
+- **YAML/JSON/TOML changes**: If the diff modifies config files, check only string values (descriptions, labels, annotations). Skip keys, structure, and non-string values.
+- **Intentional violations in diff**: If the changed lines add blockquoted text labeled "Bad:" or otherwise marked as an intentional example of poor style, do NOT flag it. The author put it there on purpose.
+- **Empty diff**: If the diff contains no added or modified lines, report "No changed lines to check. The diff contains only deletions or is empty."
+- **Unknown product name**: If a product or project name appears on a changed line and is not in `reference/product-names.md`, do NOT flag it as an error. Add an INFO-level note: "[INFO] Unknown product name: '[name]' not found in reference database. Verify capitalization against the project's official documentation."
+
 ## Self-critique
 
 Before producing output, verify:
@@ -146,3 +153,7 @@ Style preference:
 Some errors to fix before this goes out.
 Quick fix: /style-fix docs/deploy-guide.md
 ```
+
+**Cross-tool suggestion.** After the verdict, add exactly one line:
+
+> Run `/style-score` on the full file to see where it stands overall, not just the changed lines.
