@@ -10,7 +10,23 @@ The user will provide content to score via: $ARGUMENTS
 
 This could be pasted text or a file path. If it looks like a file path, read the file first.
 
-## Scoring Process
+## Scope detection
+
+Before scoring, classify the input.
+
+**Content type classification:**
+- **Prose** (blog post, doc page, README): Score all five categories.
+- **Code comments**: Score only Product Names (30%) and Inclusive Language (from Punctuation and Style, 10%). Report the other three categories as "N/A (code comments)" and calculate the weighted score from the applicable categories only.
+- **YAML/JSON/TOML config files**: Score only string values. Report the score with a note: "Scored N string values from config file. Keys and structure excluded."
+- **Commit message or PR description**: Score all categories but weight Structure and Formatting at 0% (short-form content does not need headings or section structure). Redistribute that 10% equally to Product Names and Writing Quality.
+
+**Edge cases:**
+- **Empty file**: Report "File is empty. Score: N/A."
+- **Binary file**: Report "Binary file detected. Scoring applies to text content only."
+- **Quoted material or flagged examples**: Exclude text inside blockquotes labeled "Bad:" or otherwise marked as intentional bad examples from the scoring counts.
+- **Unknown product name**: Do not penalize the score for product names not in `reference/product-names.md`. Note them separately: "Unknown product names (not scored): [list]."
+
+## Scoring process
 
 1. **Read the full document.** Count sentences, paragraphs, and words. Exclude code blocks from prose analysis.
 2. **Score each category** using the rubrics below. Count specific violations. Do not estimate.

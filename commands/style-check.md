@@ -6,7 +6,27 @@ The user will provide content to check via: $ARGUMENTS
 
 This could be pasted text, a file path, or a glob pattern. If it looks like a file path or glob, read the file(s) first.
 
-## How to Think
+## Scope detection
+
+Before running any checks, classify the input to determine scope and depth.
+
+**Content type classification:**
+- **Prose** (blog post, doc page, README): Apply all checks.
+- **Code comments**: Check only product names and inclusive language. Skip tone, wordy phrases, and structure checks. Code comments follow different conventions.
+- **YAML/JSON/TOML config files**: Check only string values (descriptions, labels, annotations, display names). Skip keys, boolean values, numeric values, and structural elements.
+- **Commit message or PR description**: Apply all checks but relax structure rules (short-form content does not need headings or lists).
+- **Quoted material or flagged examples**: If text is inside a blockquote, labeled "Bad:", or otherwise marked as an intentional example of poor style, do NOT flag it. The author is showing what not to do.
+
+**Depth detection:**
+- **Short content** (under 50 lines, such as commit messages or PR descriptions): Run all checks but produce compact output. One line per finding, no tier headings if a tier is empty.
+- **Full document** (50+ lines): Run all checks with full output format including tier headings and summary.
+
+**Edge cases:**
+- **Empty file**: Report "File is empty. Nothing to check."
+- **Binary file**: Report "Binary file detected. Style checking applies to text content only."
+- **Unknown product name**: If a product or project name appears that is not in `reference/product-names.md`, do NOT flag it as an error. Instead, add an INFO-level note: "[INFO] Unknown product name: '[name]' not found in reference database. Verify capitalization against the project's official documentation."
+
+## How to think
 
 Before you check anything, read the entire document and mark all code blocks, inline code spans, URLs, and file paths as EXCLUDED ZONES. Never flag anything inside them. Tool names like `podman` are correct lowercase in code but wrong lowercase in prose.
 
@@ -59,6 +79,10 @@ If none: "None."
 Examples: "3 to fix, 5 suggestions, 2 optional. The product names are the priority." / "0 to fix, 0 suggestions, 1 optional. This is ready to publish."
 
 If no issues at all: "No issues found. This content is ready to publish."
+
+**Cross-tool suggestions.** After the summary, add exactly one line:
+
+> Run `/tone-check` to verify the voice matches Red Hat engineering style.
 
 ## Calibration
 

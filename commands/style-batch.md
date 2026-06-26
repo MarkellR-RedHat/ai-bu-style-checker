@@ -10,6 +10,13 @@ If no argument is provided, default to `**/*.md` in the current directory.
 
 **Pass 1: Discover files.** Resolve the path or glob to a list of text files (Markdown, AsciiDoc, RST, plain text). Skip binary files, images, generated files, and anything inside `node_modules/`, `.git/`, `_build/`, `build/`, `dist/`, or `vendor/`.
 
+**Content type handling per file.** Classify each discovered file before checking it:
+- **Prose files** (.md, .adoc, .rst, .txt): Apply all checks.
+- **Config files** (.yaml, .yml, .json, .toml): Check only string values (descriptions, labels, annotations). Report these under a separate "Config files" section.
+- **Code files** (.py, .go, .js, .sh): Check only comments and docstrings. Report these under a separate "Code comments" section.
+- **Empty files**: Count them separately. Report: "X empty files skipped."
+- **Binary files**: Silently skip. Do not report.
+
 **Pass 2: Check each file.** Run the same checks as `/style-check`. Mark excluded zones first (code blocks, inline code, URLs, file paths). Then check product names, tone, wordy phrases, em dashes, structure, and inclusive language. Record every finding with its tier and type.
 
 **Pass 3: Aggregate.** Build the dashboard from the per-file data. Double-check that your totals add up before you write anything down.

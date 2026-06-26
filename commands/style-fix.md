@@ -6,6 +6,22 @@ The user will provide content to fix via: $ARGUMENTS
 
 This could be pasted text or a file path. If it looks like a file path, read the file first.
 
+## Step 0: Scope detection
+
+Before fixing anything, classify the input.
+
+**Content type classification:**
+- **Prose** (blog post, doc page, README): Apply all fix steps.
+- **Code comments**: Fix only product names and inclusive language. Leave tone and phrasing alone. Code comments have their own conventions.
+- **YAML/JSON/TOML config files**: Fix only string values (descriptions, labels, annotations, display names). Never modify keys, structure, or non-string values.
+- **Commit message or PR description**: Apply all fixes but skip structure changes (no sentence splitting, no heading recommendations).
+- **Quoted material or flagged examples**: If text is inside a blockquote, labeled "Bad:", or otherwise marked as an intentional example of poor style, do NOT fix it. The author put it there on purpose.
+
+**Edge cases:**
+- **Empty file**: Report "File is empty. Nothing to fix." and stop.
+- **Binary file**: Report "Binary file detected. Style fixes apply to text content only." and stop.
+- **Unknown product name**: If a product or project name appears that is not in `reference/product-names.md`, do NOT change it. Note it in the summary: "Unknown product name '[name]' not in reference database. Verify capitalization manually."
+
 ## Step 1: Pre-scan
 
 Read the entire document. Mark all code blocks, inline code spans, URLs, and file paths as EXCLUDED ZONES. Never modify anything inside them. Then build a first-use registry: scan top to bottom and record every product name, acronym, and technology name with its position so you expand terms at the correct first occurrence.
@@ -97,6 +113,12 @@ End with exactly one line summarizing the work:
 - No errors: "Fixed Y style issues and Z minor improvements."
 - Only errors: "Fixed X errors. Review the product name changes, those are the ones that matter most."
 - No fixes at all: skip this line entirely.
+
+## Cross-tool suggestion
+
+After the closing line, add exactly one line:
+
+> Run `/review-as sre` to get a technical accuracy review.
 
 ## Calibration
 
