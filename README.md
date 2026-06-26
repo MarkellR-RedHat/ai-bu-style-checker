@@ -1,16 +1,30 @@
 # ai-bu-style-checker
 
-You just wrote "Openshift" instead of "OpenShift" in a blog post that 10,000 people will read. The style checker catches that before they do.
+**You wrote "Openshift" in a blog post 10,000 people will read. The style checker catches it before they do.**
 
 ## The problem
 
-You know the rules. "OpenShift" has a capital S. First use needs the full name. You cannot write "Red Hat's." But you are juggling a deadline, three reviews, and a draft that is already late. You forget. Everybody forgets. And then you get the email.
+You know the rules. "OpenShift" has a capital S. First mention needs the full product name. You cannot write "Red Hat's." But you are juggling a deadline, three reviews, and a draft that is already late. You forget. Everyone forgets. Then you get the email.
 
-This tool is a copy editor that has memorized every product name, every style rule, and every capitalization quirk in the Red Hat universe. It checks your content in seconds and tells you exactly what to fix, with the exact replacement text. No vague suggestions. No judgment. Just the fixes.
+## Quick start
 
-## What it catches
+```bash
+git clone https://github.com/MarkellR-RedHat/ai-bu-style-checker.git
+cd ai-bu-style-checker
+bash install.sh
+```
 
-Here is a realistic draft with 30+ issues, followed by what the checker finds.
+Then in any Claude Code session:
+
+```
+/style-check path/to/your-doc.md
+```
+
+That's it. You get a prioritized list of every product name, capitalization, and style issue, with exact replacement text for each one.
+
+## Before and after
+
+Here is a realistic draft with 30+ issues, followed by what the checker produces.
 
 ### Before (a draft with issues)
 
@@ -157,97 +171,18 @@ allowlist of approved GPU nodes.
 
 **Score: 24/100 (before) to 91/100 (after).**
 
-## Installation
-
-```bash
-git clone https://github.com/MarkellR-RedHat/ai-bu-style-checker.git
-cd ai-bu-style-checker
-bash install.sh
-```
-
-This copies 8 command files and 2 reference files to `~/.claude/commands/` so they are available as slash commands in Claude Code.
-
 ## Commands
 
-### Core commands
-
-#### `/style-check <file|text>` - Find issues without changing anything
-
-Reports every style issue grouped by priority: fix before publishing, would improve the piece, and style preference. Each finding includes the exact text to change and the exact replacement.
-
-```
-/style-check path/to/document.md
-/style-check "Red Hat's Openshift platform utilizes cutting-edge technology"
-```
-
-#### `/style-fix <file|text>` - Apply fixes automatically
-
-Applies all corrections directly. For file paths, edits the file in place. For pasted text, outputs the corrected version. Produces a clean diff you can review in 30 seconds.
-
-```
-/style-fix path/to/document.md
-```
-
-#### `/style-score <file|text>` - Score your draft
-
-Scores content out of 100 across five weighted categories. Tells you exactly where you stand, what to fix first, and what you are already doing well.
-
-```
-/style-score path/to/document.md
-```
-
-#### `/tone-check <file|text>` - Check your voice
-
-Rates content on a 5-point scale from engineering blog (target) to press release (avoid). Red Hat engineers talk like engineers. If a sentence could appear in any company's blog, it's not Red Hat enough.
-
-```
-/tone-check path/to/document.md
-```
-
-### Workflow commands
-
-#### `/style-batch <path|glob>` - Check a whole directory
-
-Checks every file and produces a dashboard with aggregate statistics, a prioritized list of worst offenders, and per-file reports.
-
-```
-/style-batch docs/
-/style-batch content/**/*.md
-```
-
-#### `/style-diff <branch>` - Check only your changes
-
-Checks only the lines you changed in a git diff. Pre-existing issues are not your problem. This is the pre-PR check.
-
-```
-/style-diff main
-/style-diff origin/main
-/style-diff HEAD~3
-/style-diff --staged
-```
-
-#### `/style-compare <old> <new>` - Compare versions
-
-Shows which issues were fixed, which were introduced, and the score delta between two versions.
-
-```
-/style-compare old-draft.md new-draft.md
-/style-compare HEAD~1 path/to/file.md
-/style-compare path/to/file.md
-```
-
-#### `/style-learn <exception>` - Record exceptions
-
-When the checker flags something that is intentionally correct for your project, record an exception so future checks skip it.
-
-```
-/style-learn "Konflux is a real product name, don't flag it"
-/style-learn "GPU doesn't need expansion for our ML engineering audience"
-/style-learn list
-/style-learn remove GPU
-```
-
-Exceptions are stored in `.style-exceptions.yml` in your project root. Non-negotiable rules (product name capitalization, no possessive "Red Hat's," no "RH" abbreviation) cannot be overridden.
+| Command | What it does |
+|---------|-------------|
+| `/style-check <file\|text>` | Find every style issue. Reports errors, suggestions, and optional fixes with exact replacement text. |
+| `/style-fix <file\|text>` | Apply all corrections. Edits the file in place and produces a clean diff. |
+| `/style-score <file\|text>` | Score your draft 0-100 across five categories. Shows what to fix first. |
+| `/tone-check <file\|text>` | Rate your voice on a 5-point scale from engineering blog (good) to press release (bad). |
+| `/style-batch <path\|glob>` | Check every file in a directory. Dashboard with aggregate stats and worst offenders. |
+| `/style-diff <branch>` | Check only lines you changed. Pre-PR gate that ignores pre-existing issues. |
+| `/style-compare <old> <new>` | Compare two versions. Shows fixed issues, new issues, and score delta. |
+| `/style-learn <exception>` | Record a project-specific exception so future checks skip it. |
 
 ## Typical workflow
 
@@ -255,7 +190,7 @@ Exceptions are stored in `.style-exceptions.yml` in your project root. Non-negot
 2. **Run `/style-score`** to see where you stand.
 3. **Run `/style-fix`** to auto-correct most issues.
 4. **Run `/style-check`** to review any remaining findings that need human judgment.
-5. **Before opening a PR**, run `/style-diff main` to catch issues in your changes.
+5. **Before opening a PR**, run `/style-diff main` to catch issues in your changes only.
 6. **If the checker flags something intentional**, run `/style-learn` to record the exception.
 
 ## Reference files
@@ -264,7 +199,7 @@ The `reference/` directory contains two guides that power the checker:
 
 - **`reference/product-names.md`**: 250+ product names with correct capitalization, acceptable abbreviations, and common mistakes. Covers Red Hat products, NVIDIA/Intel/AMD/AWS/Azure/GCP/IBM partner products, open source AI/ML tools, and the Kubernetes ecosystem.
 
-- **`reference/style-guide.md`**: Red Hat writing style rules. Voice principles, heading conventions, list formatting, code blocks, link text, inclusive language, technical writing patterns, and AI/ML terminology.
+- **`reference/style-guide.md`**: Red Hat writing style rules covering voice, headings, lists, code blocks, link text, inclusive language, technical patterns, and AI/ML terminology.
 
 ## Contributing
 
