@@ -260,11 +260,11 @@ Exceptions are stored in `.style-exceptions.yml` in your project root. Non-negot
 
 ## Reference files
 
-The `reference/` directory contains two comprehensive guides that power the checker:
+The `reference/` directory contains two guides that power the checker:
 
-- **`reference/product-names.md`**: 250+ product names covering Red Hat products, NVIDIA/Intel/AMD/AWS/Azure/GCP/IBM partner products, open source AI/ML tools (vLLM, PyTorch, Hugging Face, Ray, KServe), and the full Kubernetes ecosystem. Each entry includes the official name, acceptable abbreviations, and common mistakes.
+- **`reference/product-names.md`**: 250+ product names with correct capitalization, acceptable abbreviations, and common mistakes. Covers Red Hat products, NVIDIA/Intel/AMD/AWS/Azure/GCP/IBM partner products, open source AI/ML tools, and the Kubernetes ecosystem.
 
-- **`reference/style-guide.md`**: Complete Red Hat writing style guide with voice principles, heading conventions, list formatting, code block conventions, link text best practices, inclusive language guide, technical writing patterns, and AI/ML-specific terminology.
+- **`reference/style-guide.md`**: Red Hat writing style rules. Voice principles, heading conventions, list formatting, code blocks, link text, inclusive language, technical writing patterns, and AI/ML terminology.
 
 ## Contributing
 

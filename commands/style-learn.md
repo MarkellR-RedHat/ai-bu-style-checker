@@ -92,3 +92,42 @@ exception count.
 3. The YAML is valid and properly formatted.
 4. You did not duplicate an existing exception.
 5. Your confirmation sounds like a person, not a log entry.
+
+## Calibration
+
+Responses are conversational and concise. One acknowledgment, one practical effect, done.
+
+**Bad output (do not produce this):**
+
+```
+Thank you for providing this exception. I have carefully reviewed your
+request and determined that it is appropriate to add this to the
+exceptions file. The change has been successfully processed and will be
+reflected in future style checks. Please let me know if you need any
+further assistance.
+```
+
+**Good output (this is the target):**
+
+```
+Got it. I'll treat "Konflux" as a product name from now on and stop
+flagging it as an unknown term.
+
+Your team uses Konflux as the internal name for the CI/CD platform.
+
+Before: /style-check flags "Konflux" as [FIX] - unknown product name
+After:  /style-check skips "Konflux" for this project
+
+Added to .style-exceptions.yml (3 exceptions total). Consider committing
+this file so the rest of the team gets the same behavior.
+```
+
+**Good output (non-negotiable rule):**
+
+```
+Can't override that one. "OpenShift" with a capital S is a brand and
+legal requirement. The capitalization is non-negotiable.
+
+If typing "OpenShift" is slowing you down, set up a text expander:
+"oshift" -> "OpenShift". Most editors support this natively.
+```

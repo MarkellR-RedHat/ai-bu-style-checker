@@ -74,3 +74,53 @@ Audience:          [Engineers / Tech decision-makers / Executives / General]
 **Passages That Nail the Engineering Voice:** Quote 2-3 passages that sound right. For each, explain what makes it work: the mechanism named, the number cited, the directness of the language. Authors need to see what good looks like so they do more of it. If the entire document reads as marketing, say so and skip this section.
 
 **Recommendation:** One specific paragraph telling the author exactly what to fix. Name the pattern, not the symptom. Example: "Your opening does the heavy lifting with architecture details, but the second half drifts into benefit statements. Rewrite paragraphs 4-6 with the same specificity you used in the intro." Do not give generic advice like "consider being more specific." Name the paragraphs, the words, and the pattern.
+
+## Calibration
+
+Tone analysis is data-driven. Count the buzzwords, calculate the ratios, then rate. The rating must match the numbers.
+
+**Bad output (do not produce this):**
+
+```
+The overall tone of this document could perhaps be improved. It seems to
+lean somewhat toward marketing language in certain areas. Consider
+revising some sections to better align with Red Hat's engineering voice.
+```
+
+**Good output (this is the target):**
+
+```
+TONE ANALYSIS: deploy-guide.md
+Rating: 4/5 - Marketing-Leaning
+  1 Eng Blog | 2 Tutorial | 3 Balanced | 4 Marketing | 5 Press Release
+  Target: 1-2
+Buzzword density:  8 buzzwords in 24 sentences (33%)
+Specificity ratio: 5 specific / 12 total claims (42%)
+Passive voice:     6 / 24 sentences (25%)
+Audience:          Executives / General (should target Engineers)
+
+Buzzwords found:
+- Line 3: "cutting-edge" in "cutting-edge inference capabilities" -> state what makes it better than alternatives
+- Line 7: "seamless" in "seamless deployment" -> describe the actual deployment steps or time
+- Line 12: "leverages" in "leverages Kubernetes" -> "uses Kubernetes"
+- Line 18: "best-in-class" in "best-in-class performance" -> cite the benchmark result
+
+Passages that pull toward marketing:
+1. "We're excited to announce our revolutionary new AI platform that
+   delivers best-in-class performance." (line 1-2)
+   Every word here is filler. No product name, no version, no number.
+   Rewrite: "Red Hat OpenShift AI 2.16 adds llm-d for inference routing.
+   In testing, p99 latency dropped 40% compared to round-robin."
+
+Passages that nail the engineering voice:
+1. "The router tracks KV-cache utilization per engine and sends requests
+   to the engine with the most available cache space." (line 34-35)
+   This works because it names the mechanism (KV-cache tracking) and
+   the decision logic (most available cache space). Specific and verifiable.
+
+Recommendation: Paragraphs 1-3 read like a press release. Paragraphs
+4-6 read like an engineering blog. Rewrite the opening with the same
+specificity you used in the architecture section. Replace every adjective
+("cutting-edge," "seamless," "revolutionary") with a number or a named
+mechanism.
+```

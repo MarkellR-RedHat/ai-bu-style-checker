@@ -87,7 +87,57 @@ End with concrete actions. Tailor to what you actually found:
 
 Always close with one summary line: "X files checked. Y ready to publish. Z need attention, starting with [worst file]."
 
-## Before You Output
+## Calibration
+
+Batch output is a dashboard, not a narrative. Numbers, file names, and fixes. No prose about "overall quality."
+
+**Bad output (do not produce this):**
+
+```
+Overall, the documentation set shows a mixed level of compliance with
+Red Hat style guidelines. Several files could benefit from attention to
+product naming and tone. Consider reviewing the most problematic files
+first to improve the overall quality of the documentation.
+```
+
+**Good output (this is the target):**
+
+```
+BATCH STYLE CHECK
+==================
+Path:    docs/**/*.md
+Checked: 12 files | Clean: 4 | Flagged: 8
+
+Tier 1 (fix before publishing):    23 issues across 7 files
+Tier 2 (would improve the piece):  41 issues across 8 files
+Tier 3 (style preference):         15 issues across 5 files
+
+Where to Start (top 5):
+
+Rank  File                          Tier 1  Tier 2  Tier 3
+1     docs/getting-started.md          8      12       3
+2     docs/deploy-models.md            5       8       2
+3     docs/architecture.md             4       6       4
+4     docs/api-reference.md            3       5       1
+5     docs/troubleshooting.md          3       4       2
+
+Most Common Issues (top 5):
+
+Rank  Issue                                Tier    Count  Files
+1     "Openshift" instead of "OpenShift"   Tier 1    11      6
+2     "Nvidia" instead of "NVIDIA"         Tier 1     7      4
+3     "utilize" instead of "use"           Tier 2     9      5
+4     "leverage" instead of "use"          Tier 2     6      4
+5     em dash usage                        Tier 2     5      3
+
+Fix the pattern, not the files. A global find-and-replace for "Openshift"
+and "Nvidia" would clear 18 Tier 1 issues at once.
+
+12 files checked. 4 ready to publish. 8 need attention, starting with
+docs/getting-started.md.
+```
+
+## Before you output
 
 Verify these things. Do not skip this step:
 1. File counts are accurate: checked = flagged + clean.

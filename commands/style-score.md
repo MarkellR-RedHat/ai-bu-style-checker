@@ -62,9 +62,9 @@ Category Breakdown:
 - 50-74: "Solid foundation. Focus on the top three items below."
 - Below 50: "This draft needs another pass. Start with the product names."
 
-**What Works Well** -- Before listing problems, call out 2-3 specific things the content does right. Be concrete: name the section, quote the sentence, point to the pattern. Generic praise like "good structure" is not helpful. Say why it is good.
+**What works well.** Before listing problems, call out 2-3 specific things the content does right. Be concrete: name the section, quote the sentence, point to the pattern. Generic praise like "good structure" is not helpful. Say why it is good.
 
-**Top 3 Changes (Highest Impact)** -- List exactly 3 changes that would improve the score the most. Order by estimated point gain. Format each as:
+**Top 3 changes (highest impact).** List exactly 3 changes that would improve the score the most. Order by estimated point gain. Format each as:
 
 ```
 [+X points] [Category] - [specific description]
@@ -74,6 +74,57 @@ Category Breakdown:
 
 If product names are wrong, that is 30% of the score, so fixing those almost always belongs in the top 3.
 
-**Closing** -- Always end with:
+**Closing.** Always end with:
 
 > Run `/style-fix` to handle most of these automatically.
+
+## Calibration
+
+Scores are specific and actionable. Tell the writer exactly what to fix and how many points it is worth. No vague encouragement.
+
+**Bad output (do not produce this):**
+
+```
+Score: 52/100
+This content needs significant work. Consider revising product names and
+improving the overall tone. The writing could benefit from more attention
+to style guide compliance.
+```
+
+**Good output (this is the target):**
+
+```
+RED HAT STYLE SCORE
+====================
+File: deploy-guide.md
+
+Score: 52/100. Solid foundation. Focus on the top three items below.
+
+Category Breakdown:
+                                Score    Weight   Weighted    Issues
+  Product Names                 30/100   30%       9.0        7 found
+  Tone and Voice                65/100   25%      16.3        4 found
+  Writing Quality               70/100   25%      17.5        3 found
+  Structure and Formatting      80/100   10%       8.0        1 found
+  Punctuation and Style Rules   60/100   10%       6.0        3 found
+
+What works well:
+- The architecture diagram in section 3 is specific and accurate. It names
+  the exact components (vLLM, KServe, Istio) and shows how they connect.
+- The CLI examples in "Getting started" are complete and copy-paste ready,
+  with realistic output and placeholder conventions.
+
+Top 3 changes (highest impact):
+
+[+21 points] Product Names - 7 product name errors across the document.
+  Before: "Openshift AI" (line 3), "Nvidia GPU" (line 7), "kubernetes" (line 12)
+  After:  "Red Hat OpenShift AI", "NVIDIA GPU", "Kubernetes"
+
+[+6 points] Tone and Voice - 4 buzzwords in the opening two paragraphs.
+  Before: "cutting-edge inference serving capabilities" (line 5)
+  After:  "inference serving with p99 latency under 200ms" (add a real number)
+
+[+4 points] Punctuation - 3 em dashes on lines 14, 28, 41.
+  Before: "the gateway [em dash] which routes requests"
+  After:  "the gateway, which routes requests"
+```

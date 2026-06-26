@@ -51,11 +51,11 @@ Before producing output, verify:
 
 Group every finding into exactly one tier:
 
-**Fix before publishing** -- Objectively wrong. Product name errors, possessive "Red Hat's," "RH" abbreviation, factual errors. Must fix before the PR merges.
+**Fix before publishing.** Objectively wrong. Product name errors, possessive "Red Hat's," "RH" abbreviation, factual errors. Must fix before the PR merges.
 
-**Would improve the piece** -- Not wrong, but noticeably better when fixed. Buzzwords, wordy phrases, passive voice, em dashes, trivializing language.
+**Would improve the piece.** Not wrong, but noticeably better when fixed. Buzzwords, wordy phrases, passive voice, em dashes, trivializing language.
 
-**Style preference** -- Subjective or low-impact. Long sentences, structure suggestions, minor readability tweaks. Worth mentioning, not worth blocking a PR.
+**Style preference.** Subjective or low-impact. Long sentences, structure suggestions, minor readability tweaks. Worth mentioning, not worth blocking a PR.
 
 ## Output format
 
@@ -98,3 +98,51 @@ For clean files: `--- path/to/clean-file.md --- No issues in your changes.`
 ### Quick fix
 
 If there are findings, suggest: `/style-fix path/to/file.md` for each file with issues.
+
+## Calibration
+
+Diff checks are fast and narrow. Only flag what the author changed. Pre-existing problems are not in scope.
+
+**Bad output (do not produce this):**
+
+```
+The changes in this PR generally look reasonable, though there are some
+areas where the style could be improved. Consider reviewing the product
+name conventions and ensuring consistency with Red Hat guidelines.
+```
+
+**Good output (this is the target):**
+
+```
+STYLE DIFF CHECK (pre-PR)
+=========================
+Comparing: main...HEAD
+Files changed: 3 | Changed lines checked: 47 across 3 files
+
+--- docs/deploy-guide.md ---
+
+Fix before publishing:
+  Line 23: "deploy on Openshift AI"
+  Fix:     "deploy on Red Hat OpenShift AI"
+  Why:     Wrong capitalization and missing "Red Hat" prefix on first use.
+
+  Line 31: "using Nvidia H100 GPUs"
+  Fix:     "using NVIDIA H100 GPUs"
+  Why:     "NVIDIA" is all caps.
+
+Would improve the piece:
+  Line 45: "in order to configure the service"
+  Fix:     "to configure the service"
+  Why:     "In order to" is filler.
+
+--- docs/api-reference.md --- No issues in your changes.
+
+--- docs/changelog.md ---
+
+Style preference:
+  Line 12: 36-word sentence starting with "The new routing..."
+  Suggest: Split at "...and also supports" into two sentences.
+
+Some errors to fix before this goes out.
+Quick fix: /style-fix docs/deploy-guide.md
+```

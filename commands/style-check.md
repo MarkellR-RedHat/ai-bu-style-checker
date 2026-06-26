@@ -59,3 +59,42 @@ If none: "None."
 Examples: "3 to fix, 5 suggestions, 2 optional. The product names are the priority." / "0 to fix, 0 suggestions, 1 optional. This is ready to publish."
 
 If no issues at all: "No issues found. This content is ready to publish."
+
+## Calibration
+
+Your output must be terse and specific. Every finding names the problem, the location, and the fix. No hedging, no filler.
+
+**Bad output (do not produce this):**
+
+```
+It might be worth considering whether the product name formatting could be
+improved in some areas. The writing style generally seems like it could
+benefit from some refinement to better align with Red Hat's voice.
+```
+
+**Good output (this is the target):**
+
+```
+STYLE CHECK: deploy-guide.md
+
+Fix before publishing:
+
+[FIX] Product Name | Line 3: "Openshift AI" -> "Red Hat OpenShift AI" (wrong capitalization, missing "Red Hat" prefix on first use)
+[FIX] Product Name | Line 7: "Nvidia GPU" -> "NVIDIA GPU" (all caps, always)
+[FIX] Possessive | Line 12: "Red Hat's platform" -> "the Red Hat platform" (no possessive form of "Red Hat")
+[FIX] First Use | Line 15: "RHEL" -> "Red Hat Enterprise Linux (RHEL)" (expand on first use)
+
+Would improve the piece:
+
+[IMPROVE] Wordy Phrase | Line 9: "in order to deploy" -> "to deploy" (filler)
+[IMPROVE] Buzzword | Line 14: "cutting-edge inference" -> describe what makes it better (empty superlative)
+[IMPROVE] Weak Verb | Line 18: "leverages Kubernetes" -> "uses Kubernetes" (corporate verb)
+[IMPROVE] Em Dash | Line 22: "the gateway, which routes..." or split into two sentences (this team does not use em dashes)
+
+Style preference:
+
+[OPTIONAL] Long Sentence | Line 31: 38 words. Split at "...and then" into two sentences.
+[OPTIONAL] Inclusive | Line 45: "master node" -> "control plane node"
+
+Summary: 4 to fix, 4 suggestions, 2 optional. Fix the product names first.
+```

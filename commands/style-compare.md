@@ -93,3 +93,60 @@ Score: XX -> YY ([+/-]ZZ points)
 | Both 90+ | "Both versions clear the style bar. [Improved: Nice polish. / Same: Solid as-is.]" |
 
 If issues remain: suggest `/style-fix [new version path]` to clean up automatically.
+
+## Calibration
+
+Comparison output is a before/after scoreboard. Fixed items get a brief acknowledgment. Introduced items get the fix. No editorializing.
+
+**Bad output (do not produce this):**
+
+```
+The revised version shows some improvement in certain areas, though there
+are still opportunities for further refinement. The overall direction of
+the changes appears positive, with some caveats regarding newly introduced
+style issues.
+```
+
+**Good output (this is the target):**
+
+```
+STYLE COMPARISON
+================
+Before: draft-v1.md    After: draft-v2.md
+Score:  38/100  ->  71/100  (+33 points)
+
+Before: [======>             ] 38/100
+After:  [==============>     ] 71/100
+                               +33 points
+
+Category                    Before  After   Delta
+Product Names (30%)         20/100  80/100  +60
+Tone and Voice (25%)        40/100  65/100  +25
+Writing Quality (25%)       55/100  70/100  +15
+Structure (10%)             60/100  75/100  +15
+Punctuation and Style (10%) 50/100  55/100  +5
+
+Fix before publishing:
+
+Fixed (3):
+[ERROR] Good catch: "Openshift AI" -> "Red Hat OpenShift AI"
+[ERROR] Good catch: "Nvidia" -> "NVIDIA"
+[ERROR] Good catch: "Red Hat's platform" -> "the Red Hat platform"
+
+Introduced (1):
+[ERROR] New: "kubernetes" (line 42) | Fix: "Kubernetes" (capital K in prose)
+
+Remaining (2):
+[ERROR] "RHEL" on line 8 still needs expansion on first use.
+  Fix: "Red Hat Enterprise Linux (RHEL)"
+[ERROR] "OCP" on line 19 still needs expansion on first use.
+  Fix: "Red Hat OpenShift Container Platform (OCP)"
+
+COMPARISON SUMMARY
+------------------
+Fixed: 3 | Introduced: 1 | Remaining: 2 | Net: -4
+Score: 38 -> 71 (+33 points)
+
+Overall improvement (38 to 71). 1 new issue came in. Fix those and this
+is in good shape. Run /style-fix draft-v2.md to clean up.
+```

@@ -97,3 +97,38 @@ End with exactly one line summarizing the work:
 - No errors: "Fixed Y style issues and Z minor improvements."
 - Only errors: "Fixed X errors. Review the product name changes, those are the ones that matter most."
 - No fixes at all: skip this line entirely.
+
+## Calibration
+
+Your change summary must be scannable in 10 seconds. Each row is one fix, exact before and after, no commentary.
+
+**Bad output (do not produce this):**
+
+```
+I've made several improvements to enhance the overall quality of the
+document. The product names have been updated to better reflect Red Hat's
+branding guidelines, and some language adjustments were made to improve
+clarity and readability throughout the piece.
+```
+
+**Good output (this is the target):**
+
+```
+STYLE FIXES APPLIED
+====================
+Source: deploy-guide.md
+
+| Priority | Category       | Before                          | After                             |
+|----------|----------------|---------------------------------|-----------------------------------|
+| ERROR    | Product name   | "Openshift AI"                  | "Red Hat OpenShift AI"            |
+| ERROR    | Product name   | "Nvidia GPU"                    | "NVIDIA GPU"                      |
+| ERROR    | Possessive     | "Red Hat's platform"            | "the Red Hat platform"            |
+| ERROR    | First-use abbr | "RHEL"                          | "Red Hat Enterprise Linux (RHEL)" |
+| WARNING  | Wordy phrase   | "in order to"                   | "to"                              |
+| WARNING  | Buzzword       | "cutting-edge inference"        | "low-latency inference"           |
+| WARNING  | Weak verb      | "leverages Kubernetes"          | "uses Kubernetes"                 |
+| WARNING  | Em dash        | "the gateway [em dash] which"   | "the gateway, which"              |
+| INFO     | Long sentence  | "When you configure..." (38 w)  | Split into two sentences          |
+
+Fixed 4 errors, 4 style issues, 1 minor improvement. Review the product name changes, those are the ones that matter most.
+```
